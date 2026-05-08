@@ -2,58 +2,82 @@ import { useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { type ColDef,  type CellValueChangedEvent } from "ag-grid-community";
+import {
+  type ColDef,
+  type ICellRendererParams,
+  type CellValueChangedEvent,
+} from 'ag-grid-community';
 
-type SettingRow = {
-  setting: string;
-  value: string;
-};
+interface ColorRow {
+  id: number;
+  name: string;
+  color: string;
+}
 
 function Settings() {
 
-  const [rowData, setRowData] = useState<SettingRow[]>([
-    { setting: "Background Color", value: "#ffffff" },
-    { setting: "Text Color", value: "#000000" },
+  const [rowData, setRowData] = useState<ColorRow[]>([
+    { id: 1, name: "Background", color: "#ffffff" },
+    { id: 2, name: "Text", color: "#000000" },
+    { id: 3, name: "Primary", color: "#1976d2" },
+    { id: 4, name: "Warning", color: "#ff9800" },
+    { id: 5, name: "Error", color: "#f44336" },
   ]);
 
-  const columnDefs: ColDef<SettingRow>[] = [
+  const columnDefs: ColDef<ColorRow>[] = [
     {
-      field: "setting",
-      editable: false,
+      field: "name",
+      flex: 1,
     },
     {
-      field: "value",
+      field: "color",
       editable: true,
+
+      // show color preview
+      cellRenderer: (params: ICellRendererParams<ColorRow>) => {
+        return (
+          <div className="flex items-center gap-2">
+            <div
+              style={{
+                width: 20,
+                height: 20,
+                backgroundColor: params.value,
+                borderRadius: 4,
+                border: "1px solid #ccc",
+              }}
+            />
+            {params.value}
+          </div>
+        );
+      },
+
+      // color picker editor
+      cellEditor: "agTextCellEditor",
     },
   ];
 
-  const onCellValueChanged = (event: CellValueChangedEvent<SettingRow>) => {
-    setRowData(event.api.getRenderedNodes().map((n) => n.data).filter(d => d !== undefined) as SettingRow[]);
+  const onCellValueChanged = (params: CellValueChangedEvent<ColorRow>) => {
+    setRowData((prev) =>
+      prev.map((row) =>
+        row.id === params.data.id ? { ...params.data } : row
+      )
+    );
   };
-
-  const bgColor = rowData.find(r => r.setting === "Background Color")?.value;
-  const textColor = rowData.find(r => r.setting === "Text Color")?.value;
 
   return (
     <div>
 
       <h1 className="text-3xl font-bold mb-5">
-        Settings (Color Editor)
+        Settings - Color Table
       </h1>
 
-      {/* LIVE PREVIEW */}
-      <div
-        className="p-5 rounded mb-5"
-        style={{
-          backgroundColor: bgColor,
-          color: textColor,
-        }}
-      >
-        This is a live preview box 🎨
+      {/* PREVIEW BOX */}
+      <div className="mb-5 p-5 rounded bg-gray-100">
+        <p>Change colors in table below 🎨</p>
       </div>
 
-      {/* AG GRID */}
-      <div className="ag-theme-alpine" style={{ height: 300 }}>
+      {/* AG GRID TABLE */}
+      <div className="ag-theme-alpine" style={{ height: 400 }}>
 
         <AgGridReact
           rowData={rowData}
