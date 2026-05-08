@@ -1,30 +1,76 @@
-import { Button, TextField } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { successMessage } from "../services/ToastService";
 
-export default function Login() {
+function Login() {
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+
+    const confirmMessage = window.confirm(
+      "Are you sure to open main layout?"
+    );
+
+    if (!confirmMessage) return;
+
+    setLoading(true);
+
+    localStorage.setItem("isLoggedIn", "true");
+
+    successMessage("Login Success");
+
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 3000);
+  };
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="bg-white p-8 rounded-xl shadow-lg w-96">
 
-      <h1 className="text-3xl font-bold text-center">
+      <h1 className="text-3xl font-bold mb-5">
         Login
       </h1>
 
-      <TextField
-        label="Email"
-        variant="outlined"
-        fullWidth
+      <input
+        type="email"
+        placeholder="Email"
+        className="w-full border p-3 mb-4 rounded"
       />
 
-      <TextField
-        label="Password"
+      <input
         type="password"
-        variant="outlined"
-        fullWidth
+        placeholder="Password"
+        className="w-full border p-3 mb-4 rounded"
       />
 
-      <Button variant="contained" fullWidth>
+      <button
+        onClick={handleLogin}
+        className="w-full bg-black text-white py-3 rounded"
+      >
         Login
-      </Button>
+      </button>
+
+      {loading && (
+        <div className="mt-4 text-center">
+          Loading Spinner...
+        </div>
+      )}
+
+      <p className="mt-4">
+        No account?
+        <Link
+          to="/signup"
+          className="text-blue-500 ml-2"
+        >
+          Signup
+        </Link>
+      </p>
 
     </div>
   );
 }
+
+export default Login;

@@ -1,27 +1,59 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import MainLayout from "../layouts/MainLayout";
-import AuthLayout from "../layouts/AuthLayout";
+import AuthLayout from "@layouts/AuthLayout";
+import MainLayout from "@layouts/MainLayout";
 
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+import Login from "@pages/Login";
+import Signup from "@pages/Signup";
 
-export default function AppRoutes() {
+import Dashboard from "@pages/Dashboard";
+import Profile from "@pages/Profile";
+import Settings from "@pages/Setting";
+
+function AppRoutes() {
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
   return (
     <Routes>
 
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Route>
-
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
+
+      <Route
+        element={
+          isLoggedIn
+            ? <MainLayout />
+            : <Navigate to="/login" />
+        }
+      >
+
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
+        />
+
+      </Route>
+
+      <Route
+        path="*"
+        element={<Navigate to="/login" />}
+      />
 
     </Routes>
   );
 }
+
+export default AppRoutes;

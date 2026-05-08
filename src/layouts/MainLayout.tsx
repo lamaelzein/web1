@@ -1,25 +1,29 @@
 import { Outlet, Link } from "react-router-dom";
 
-export default function MainLayout() {
+function MainLayout() {
   return (
-    <div>
+    <div className="flex min-h-screen">
 
-      <nav className="bg-black text-white p-4 flex gap-4">
+      <div className="w-64 bg-black text-white p-5">
 
-        <Link to="/">Home</Link>
+        <h1 className="text-2xl mb-5">
+          Main Layout
+        </h1>
 
-        <Link to="/about">About</Link>
+        <div className="flex flex-col gap-4">
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/profile">Profile</Link>
+          <Link to="/settings">Settings</Link>
+        </div>
 
-        <Link to="/login">Login</Link>
+      </div>
 
-        <Link to="/register">Register</Link>
-
-      </nav>
-
-      <div className="p-6">
+      <div className="flex-1 p-5 bg-gray-100">
         <Outlet />
       </div>
 
     </div>
   );
 }
+
+export default MainLayout;

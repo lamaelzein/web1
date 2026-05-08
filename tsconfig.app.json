@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+"paths": {
+  "@pages/*": ["src/pages/*"],
+  "@layouts/*": ["src/layouts/*"],
+  "@routes/*": ["src/routes/*"],
+  "@services/*": ["src/services/*"]
+},
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
