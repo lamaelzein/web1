@@ -1,21 +1,31 @@
 import { Button } from "@mui/material";
-
 import { AgGridReact } from "ag-grid-react";
-import  type { ColDef } from "ag-grid-community";
-
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import toast from "react-hot-toast";
 
 function Dashboard() {
+
+  const showSuccess = () => {
+    toast.success("Success button clicked!");
+  };
+
+  const showWarning = () => {
+    toast("Warning button clicked!", {
+      icon: "⚠️",
+    });
+  };
+
+  const showError = () => {
+    toast.error("Error button clicked!");
+  };
 
   const rowData = [
     { name: "Lama", age: 20 },
     { name: "Ali", age: 22 },
   ];
 
-  const columnDefs: ColDef<{ name: string; age: number; }>[] = [
-    { field: "name" },
-    { field: "age" },
+  const columnDefs = [
+    { field: "name" as const },
+    { field: "age" as const },
   ];
 
   return (
@@ -27,15 +37,27 @@ function Dashboard() {
 
       <div className="flex gap-4 mb-5">
 
-        <Button variant="contained" color="success">
+        <Button
+          variant="contained"
+          color="success"
+          onClick={showSuccess}
+        >
           Success
         </Button>
 
-        <Button variant="contained" color="warning">
+        <Button
+          variant="contained"
+          color="warning"
+          onClick={showWarning}
+        >
           Warning
         </Button>
 
-        <Button variant="contained" color="error">
+        <Button
+          variant="contained"
+          color="error"
+          onClick={showError}
+        >
           Error
         </Button>
 
