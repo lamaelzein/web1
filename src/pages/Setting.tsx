@@ -1,9 +1,9 @@
 import { useState } from "react";
+
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import type { ColDef, CellValueChangedEvent } from "ag-grid-community";
-
 type ColorRow = {
   name: string;
   color: string;
@@ -30,7 +30,6 @@ function Settings() {
       <h1 className="text-3xl font-bold mb-5">
         Settings - Color Table
       </h1>
-
       <div className="ag-theme-alpine" style={{ height: 400, width: "100%" }}>
         <AgGridReact<ColorRow>
           rowData={rowData}
