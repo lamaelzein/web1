@@ -12,7 +12,6 @@ import Settings from "@pages/Setting";
 
 function AppRoutes() {
 
-  
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   return (
