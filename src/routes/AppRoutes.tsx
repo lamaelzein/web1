@@ -4,10 +4,12 @@ import AuthLayout from "@layouts/AuthLayout";
 import MainLayout from "@layouts/MainLayout";
 
 import Login from "@pages/Login";
+
 import Signup from "@pages/Signup";
 
 import Dashboard from "@pages/Dashboard";
 import Profile from "@pages/Profile";
+
 import Settings from "@pages/Setting";
 
 function AppRoutes() {
