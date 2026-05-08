@@ -1,73 +1,159 @@
-# React + TypeScript + Vite
+## 📌 Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React + TypeScript application that contains:
+- Authentication system (Login / Signup)
+- Protected routes using localStorage
+- Main dashboard layout
+- Profile and Settings pages
+- Logout system
+- Toast notifications
+- AG Grid table
+- Material UI buttons
+- Tailwind CSS styling
+- Alias imports (@pages, @layouts, etc.)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ⚙️ Tech Stack
 
-## React Compiler
+- React (Vite + TypeScript)
+- React Router DOM
+- Tailwind CSS
+- Material UI
+- AG Grid
+- React Hot Toast
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📁 Project Architecture
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+I used a **feature-based + layered architecture**:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- layouts → shared layouts (Auth / Main)
+- pages → all screens (Login, Dashboard, etc.)
+- routes → routing system
+- services → reusable logic (toast)
+- aliases → clean imports (@pages, @layouts)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+This makes the project:
+- scalable
+- clean
+- easy to maintain
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Project Setup Steps
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. Create project
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+npm create vite@latest my-app -- --template react-ts
+
+2. Install dependencies
+
+npm install
+npm install react-router-dom
+npm install tailwindcss @tailwindcss/vite
+npm install @mui/material @emotion/react @emotion/styled
+npm install ag-grid-react ag-grid-community
+npm install react-hot-toast
+
+🎨 Styling Setup
+
+Tailwind CSS
+
+Installed Tailwind and added:
+
+@import "tailwindcss";
+
+inside index.css.
+
+🔗 Aliases Setup
+
+In vite.config.ts:
+
+@pages
+@layouts
+@routes
+@services
+
+This allows clean imports like:
+
+import Login from "@pages/Login";
+🔐 Authentication Flow
+Login page:
+User clicks login
+Confirmation popup appears
+Loading spinner for 3 seconds
+isLoggedIn saved in localStorage
+Redirect to dashboard
+Signup page:
+Simple UI (no backend)
+🧠 Protected Routes
+
+If user is NOT logged in:
+
+Redirect to login page
+
+If user IS logged in:
+
+Access main layout
+
+Stored in:
+
+localStorage.getItem("isLoggedIn")
+🏠 Main Layout Features
+
+Inside main layout:
+
+Sidebar navigation
+Dashboard
+Profile
+Settings
+Logout button
+
+🚪 Logout System
+
+When clicking logout:
+
+Remove localStorage value
+Redirect to login page
+localStorage.removeItem("isLoggedIn")
+📊 Dashboard Features
+3 Material UI buttons:
+Success
+Warning
+Error
+AG Grid table showing sample data
+🔔 Toast Notifications
+
+Using react-hot-toast:
+
+success messages on login
+global notifications system
+🌿 Git Workflow
+1. Create project branch
+git init
+git add .
+git commit -m "initial project setup"
+2. Create new branch for main features
+git checkout -b main-layout
+3. Add main features
+dashboard
+profile
+settings
+logout
+4. Merge branch
+git checkout master
+git merge main-layout
+🧾 Summary
+
+This project demonstrates:
+
+authentication flow
+protected routing
+clean architecture
+reusable components
+modern UI design
+proper TypeScript setup
+professional React structure
